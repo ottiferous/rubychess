@@ -21,10 +21,9 @@ class Board
 
   #black moves up.
   attr_accessor :board
-  def initialize(debug = false, board = Array.new(8) { Array.new(8) { nil } })
-    @board = board
-    return nil if debug == :debug
-    place_pieces
+  def initialize(debug = false, board)
+    @board = board = Array.new(8) { Array.new(8) { nil } }
+    place_pieces unless debug == :debug
 
     nil
   end
