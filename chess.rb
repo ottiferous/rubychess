@@ -1,5 +1,4 @@
 
-
 class Piece
 
   attr_accessor :color, :pos, :board, :symbol
@@ -21,6 +20,12 @@ class Piece
     x = self.moves.reject { |move| move_into_check?(self.pos, move) }
     puts x
     x
+  end
+
+  def vector(vect_a, vect_b)
+    x = vect_a[0] + vect_b[0]
+    y = vect_a[1] + vect_b[1]
+    [x, y]
   end
 
   def move_into_check?(start_pos, end_pos)
@@ -49,20 +54,20 @@ class SlidingPiece < Piece
     possible_moves = []
 
     self.move_dirs.each do |dir|
-      test_space = self.pos
+      test_space = vector(dir, test_space)
 
       while @board.valid?(test_space)
-        i, j = dir
-        x, y = test_space
+        ttest_space = vector(dir, test_space
+
+        tile = @board.empty?(test_space)
+
 
         if @board.empty?(test_space)
-          possible_moves << test_space unless possible_moves.include? test_space
-          test_space = [x+i, y+j]
+          possible_moves << test_space
         elsif test_space == self.pos
-          test_space = [x+i, y+j]
+          next
         elsif enemy_at?(test_space)
-          possible_moves << test_space unless possible_moves.include? test_space
-          test_space = [x+i, y+j]
+          possible_moves << test_space
           break
         else
           break
@@ -70,7 +75,7 @@ class SlidingPiece < Piece
       end
 
     end
-    possible_moves
+    possible_moves.uniq
   end
 
 
